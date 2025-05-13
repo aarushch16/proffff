@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Smart Agriculture - Welcome</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap');
+
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: #091921;
+      overflow-x: hidden;
+      color: #ecf0f1;
+      user-select: none;
+      perspective: 1000px;
+    }
+
+    /* Welcome Page */
+    #welcomePage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(120deg, #1d3557, #457b9d);
+      position: relative;
+      overflow: hidden;
+      padding: 1rem;
+      text-align: center;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      filter: drop-shadow(0 0 20px #ffb80099);
+    }
+
+    /* Animated shapes on welcome background */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: float3D 8s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+      background: radial-gradient(circle at center, #ffcc00, #ff7a00);
+      transform-style: preserve-3d;
+    }
+    .shape.shape1 {
+      width: 150px;
+      height: 150px;
+      top: 15%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+    .shape.shape2 {
+      width: 250px;
+      height: 250px;
+      top: 50%;
+      left: 75%;
+      animation-delay: 4s;
+    }
+    .shape.shape3 {
+      width: 180px;
+      height: 180px;
+      top: 70%;
+      left: 40%;
+      animation-delay: 2s;
+    }
+
+    @keyframes float3D {
+      0%, 100% {
+        transform: translate3d(0,0,0) rotateY(0deg);
+        opacity: 0.15;
+      }
+      50% {
+        transform: translate3d(15px,-20px,25px) rotateY(45deg);
+        opacity: 0.3;
+      }
+    }
+
+    #welcomePage h1 {
+      font-size: 4.5rem;
+      letter-spacing: 10px;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      color: #ffcc00;
+      text-shadow: 
+        0 0 12px #ffcc0077,
+        0 0 20px #ffcc0088,
+        0 0 30px #ff9900cc,
+        0 0 40px #ff7a0099,
+        0 0 60px #ff660088;
+      transform-style: preserve-3d;
+      animation: pulse3D 3s ease-in-out infinite alternate;
+      user-select: text;
+      perspective: 1200px;
+    }
+
+    @keyframes pulse3D {
+      0% {
+        text-shadow: 
+          0 0 12px #ffcc0077,
+          0 0 20px #ffcc0088,
+          0 0 30px #ff9900cc,
+          0 0 40px #ff7a0099,
+          0 0 60px #ff660088;
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+      50% {
+        text-shadow: 
+          0 0 16px #ffd633aa,
+          0 0 30px #ffd633cc,
+          0 0 48px #ffb800ee,
+          0 0 60px #ffb800ff,
+          0 0 90px #ffa500ff;
+        transform: rotateX(8deg) rotateY(6deg);
+      }
+      100% {
+        text-shadow: 
+          0 0 12px #ffcc0077,
+          0 0 20px #ffcc0088,
+          0 0 30px #ff9900cc,
+          0 0 40px #ff7a0099,
+          0 0 60px #ff660088;
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+    }
+
+    #enterBtn {
+      background: linear-gradient(145deg, #ffcc00, #ff9900);
+      color: #2d2d2d;
+      padding: 1rem 4rem;
+      font-weight: 700;
+      font-size: 1.45rem;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow:
+        0 6px 15px #ffb800cc,
+        inset 0 2px 5px #fff2aa;
+      user-select: none;
+      text-transform: uppercase;
+      filter: drop-shadow(0 4px 10px rgba(255,170,0,0.75));
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    #enterBtn:hover, #enterBtn:focus {
+      background: linear-gradient(145deg, #ffdb33, #ffaa00);
+      box-shadow:
+        0 10px 30px #ffb800ee,
+        inset 0 2px 6px #fff5d1;
+      transform: translateZ(15px) scale(1.1);
+      outline: none;
+    }
+    #enterBtn:active {
+      transform: translateZ(8px) scale(1.04);
+      box-shadow:
+        0 6px 20px #ffa500ee,
+        inset 0 2px 4px #ffeab4;
+    }
+
+    /* Crop Advisor Page */
+    #appPage {
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0.85) translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s;
+      padding: 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(150deg, #2c3e50, #3498db);
+      color: #ecf0f1;
+    }
+    #appPage.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1) translateY(0);
+    }
+
+    header {
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      padding: 1.5rem 0;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      user-select: none;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    main {
+      background: rgba(255, 255, 255, 0.1);
+      max-width: 450px;
+      width: 100%;
+      border-radius: 18px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeInUp 1s ease forwards;
+      margin-bottom: 3rem;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-bottom: 0.7rem;
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    p {
+      text-align: center;
+      font-weight: 300;
+      font-size: 0.9rem;
+      margin-bottom: 1.8rem;
+      color: #d6e0f0cc;
+      user-select: none;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #dbe9fbdd;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1.2px;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.3);
+      color: #222;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 3px 6px rgba(255,255,255,0.4);
+      outline-offset: 2px;
+      user-select: text;
+    }
+
+    select:hover, select:focus {
+      background: rgba(255,255,255,0.6);
+      box-shadow: 0 0 10px #5dade2;
+      outline: none;
+    }
+
+    button {
+      margin-top: 2rem;
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 14px;
+      border: none;
+      background-image: linear-gradient(45deg, #ffcc00, #ff9900);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #2d2d2d;
+      letter-spacing: 1.3px;
+      box-shadow: 0 5px 12px rgba(255, 170, 0, 0.7);
+      cursor: pointer;
+      transition: background-image 0.4s ease, box-shadow 0.35s ease;
+      user-select: none;
+      text-transform: uppercase;
+      filter: drop-shadow(0 3px 6px rgba(255,170,0,0.5));
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    button:hover {
+      background-image: linear-gradient(45deg, #ffb800, #ff7a00);
+      box-shadow: 0 7px 20px rgba(255, 120, 0, 0.85);
+      transform: translateY(-2px) translateZ(15px) scale(1.05);
+    }
+    button:active {
+      transform: translateY(0) translateZ(8px) scale(1);
+      box-shadow: 0 5px 10px rgba(255,170,0,0.6);
+    }
+
+    #result {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 1.3rem 1.5rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+      border-radius: 14px;
+      text-align: center;
+      color: #222;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      user-select: text;
+      min-height: 64px;
+      letter-spacing: 0.6px;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
+      transition: background 0.4s ease;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #result.error {
+      color: #ff4444;
+      background: rgba(255, 100, 100, 0.3);
+      box-shadow: 0 0 12px #ff4444aa;
+    }
+
+    footer {
+      margin-top: auto;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+      color: #ddd;
+      text-align: center;
+      max-width: 450px;
+      user-select: none;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 450px) {
+      #welcomePage h1 {
+        font-size: 2.8rem;
+        letter-spacing: 6px;
+      }
+      #enterBtn {
+        padding: 0.75rem 3rem;
+        font-size: 1.15rem;
+      }
+      main {
+        padding: 1.5rem 2rem;
+      }
+      button {
+        font-size: 1rem;
+        padding: 0.75rem;
+      }
+      header {
+        font-size: 1.7rem;
+      }
+      #result {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="welcomePage" role="main" aria-label="Welcome page for Smart Agriculture">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+
+    <h1 tabindex="0" aria-label="Smart Agriculture">Smart Agriculture</h1>
+    <button id="enterBtn" aria-label="Enter Crop Advisor Application">Enter</button>
+  </div>
+
+  <div id="appPage" role="main" aria-hidden="true" tabindex="-1">
+    <header>Smart Agriculture - Viksit Bharat 2047</header>
+    <main>
+      <h2>Crop Advisor</h2>
+      <p>Select your soil type and the upcoming season to receive the best crop recommendations for sustainable farming.</p>
+
+      <label for="soilType">Soil Type</label>
+      <select id="soilType" name="soilType" aria-label="Select soil type">
+        <option value="" disabled selected>Select soil type</option>
+        <option value="alluvial">Alluvial Soil</option>
+        <option value="black">Black Soil</option>
+        <option value="red">Red Soil</option>
+        <option value="laterite">Laterite Soil</option>
+        <option value="sandy">Sandy Soil</option>
+        <option value="clay">Clay Soil</option>
+        <option value="loamy">Loamy Soil</option>
+        <option value="silt">Silt Soil</option>
+        <option value="peat">Peat Soil</option>
+        <option value="chalky">Chalky Soil</option>
+        <option value="saline">Saline Soil</option>
+        <option value="alkaline">Alkaline Soil</option>
+        <option value="hydromorphic">Hydromorphic Soil</option>
+        <option value="mountain">Mountain Soil</option>
+        <option value="forest">Forest Soil</option>
+        <option value="desert">Desert Soil</option>
+        <option value="volcanic">Volcanic Soil</option>
+        <option value="lateritic_red">Lateritic Red Soil</option>
+        <option value="red_lateritic">Red Lateritic Soil</option>
+        <option value="saline_alkaline">Saline-Alkaline Soil</option>
+        <option value="chalky_loam">Chalky Loam Soil</option>
+        <option value="regosol">Regosol</option>
+        <option value="andosol">Andosol</option>
+        <option value="vertisol">Vertisol</option>
+        <option value="aridisol">Aridisol</option>
+        <option value="alfisol">Alfisol</option>
+        <option value="ultisol">Ultisol</option>
+        <option value="inceptisol">Inceptisol</option>
+        <option value="mollisol">Mollisol</option>
+        <option value="spodosol">Spodosol</option>
+        <option value="entisol">Entisol</option>
+        <option value="histosol">Histosol</option>
+        <option value="gelisol">Gelisol</option>
+        <option value="oxisol">Oxisol</option>
+        <option value="gleysol">Gleysol</option>
+        <option value="podzol">Podzol</option>
+        <option value="phaeozem">Phaeozem</option>
+        <option value="chernozem">Chernozem</option>
+        <option value="lixisol">Lixisol</option>
+        <option value="nitisol">Nitisol</option>
+        <option value="arenosol">Arenosol</option>
+        <option value="fluvisol">Fluvisol</option>
+        <option value="cambisol">Cambisol</option>
+        <option value="gleisol">Gleisol</option>
+        <option value="solonetz">Solonetz</option>
+        <option value="vertisol_black">Black Vertisol</option>
+        <option value="ranker">Ranker Soil</option>
+        <option value="rendzina">Rendzina Soil</option>
+        <option value="terra_rossa">Terra Rossa</option>
+        <option value="pedocal">Pedocal Soil</option>
+        <option value="pedalfer">Pedalfer Soil</option>
+        <option value="brown_forest_soil">Brown Forest Soil</option>
+        <option value="red_brown_earth">Red Brown Earth</option>
+        <option value="brown_earth">Brown Earth</option>
+        <option value="mediterranean_soil">Mediterranean Soil</option>
+        <option value="solifluction_soil">Solifluction Soil</option>
+        <option value="allophane_soil">Allophane Soil</option>
+        <option value="carpathian_soil">Carpathian Soil</option>
+        <option value="desert_oasis_soil">Desert Oasis Soil</option>
+        <option value="glacial_soil">Glacial Soil</option>
+        <option value="black_alfisol">Black Alfisol</option>
+        <option value="basaltic_soil">Basaltic Soil</option>
+        <option value="quartz_dune_soil">Quartz Dune Soil</option>
+        <option value="anthrosol">Anthrosol</option>
+        <option value="tundra_soil">Tundra Soil</option>
+        <option value="permafrost_soil">Permafrost Soil</option>
+        <option value="hydraquent_soil">Hydraquent Soil</option>
+        <option value="gleyic_soil">Gleyic Soil</option>
+        <option value="umbric_soil">Umbric Soil</option>
+        <option value="umbric_podzols">Umbric Podzols</option>
+      </select>
+
+      <label for="season">Season</label>
+      <select id="season" name="season" aria-label="Select season">
+        <option value="" disabled selected>Select season</option>
+        <option value="kharif">Kharif (Monsoon)</option>
+        <option value="rabi">Rabi (Winter)</option>
+        <option value="summer">Summer</option>
+      </select>
+
+      <button type="button" onclick="getRecommendation()" aria-live="polite">Get Crop Recommendation</button>
+
+      <div id="result" aria-live="polite" role="region" aria-atomic="true" tabindex="0"></div>
+    </main>
+    <footer>© 2024 Smart Agriculture Initiative - Viksit Bharat 2047</footer>
+  </div>
+
+  <script>
+    const welcomePage = document.getElementById('welcomePage');
+    const appPage = document.getElementById('appPage');
+    const enterBtn = document.getElementById('enterBtn');
+
+    enterBtn.addEventListener('click', () => {
+      welcomePage.style.animation = 'fadeScaleOut 0.8s forwards';
+      setTimeout(() => {
+        welcomePage.style.display = 'none';
+        appPage.style.visibility = 'visible';
+        appPage.style.opacity = '1';
+        appPage.style.transform = 'scale(1) translateY(0)';
+        appPage.setAttribute('aria-hidden', 'false');
+        appPage.querySelector('select').focus();
+      }, 800);
+    });
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeScaleOut {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    function getRecommendation() {
+      const soil = document.getElementById('soilType').value;
+      const season = document.getElementById('season').value;
+      const resultDiv = document.getElementById('result');
+
+      if (!soil || !season) {
+        resultDiv.classList.add('error');
+        resultDiv.textContent = "⚠️ Please select both soil type and season.";
+        return;
+      } else {
+        resultDiv.classList.remove('error');
+      }
+
+      const recommendations = {
+        alluvial: { kharif: "Rice, Maize, Cotton", rabi: "Wheat, Mustard, Gram", summer: "Groundnut, Sunflower" },
+        black: { kharif: "Cotton, Soybean, Maize", rabi: "Wheat, Linseed, Chickpeas", summer: "Sorghum, Millet" },
+        red: { kharif: "Millet, Pulses, Groundnut", rabi: "Wheat, Mustard", summer: "Cotton, Sesame" },
+        laterite: { kharif: "Cashew, Coconut", rabi: "Sugarcane, Potato", summer: "Tea, Coffee" },
+        sandy: { kharif: "Pearl Millet, Groundnut", rabi: "Barley, Gram", summer: "Sunflower" },
+        clay: { kharif: "Rice, Sugarcane", rabi: "Wheat, Mustard", summer: "Cotton" },
+        loamy: { kharif: "Rice, Maize", rabi: "Wheat, Lentils", summer: "Sunflower, Cotton" },
+        silt: { kharif: "Rice, Maize", rabi: "Wheat, Mustard", summer: "Sunflower" },
+        peat: { kharif: "Vegetables, Potatoes", rabi: "Carrots, Cabbage", summer: "Leafy Greens" },
+        chalky: { kharif: "Barley, Oats", rabi: "Wheat, Mustard", summer: "Sugar Beet" },
+        saline: { kharif: "Barley, Cotton", rabi: "Beetroot, Sorghum", summer: "Sesame, Sunflower" },
+        alkaline: { kharif: "Cotton, Wheat", rabi: "Barley, Mustard", summer: "Groundnut" },
+        hydromorphic: { kharif: "Rice, Jute", rabi: "Wheat, Lentils", summer: "Sugarcane" },
+        mountain: { kharif: "Millet, Maize", rabi: "Barley, Wheat", summer: "Potato" },
+        forest: { kharif: "Millet, Beans", rabi: "Wheat, Mustard", summer: "Lentils" },
+        desert: { kharif: "Pearl Millet, Guar", rabi: "Barley, Gram", summer: "Sunflower" },
+        volcanic: { kharif: "Banana, Pineapple", rabi: "Potato, Wheat", summer: "Coffee, Tea" },
+        lateritic_red: { kharif: "Cashew, Coconut", rabi: "Sugarcane, Groundnut", summer: "Tea, Rubber" },
+        red_lateritic: { kharif: "Millet, Pulses", rabi: "Wheat, Mustard", summer: "Cotton, Sesame" },
+        saline_alkaline: { kharif: "Barley, Cotton", rabi: "Beetroot, Sorghum", summer: "Sunflower, Sesame" },
+        chalky_loam: { kharif: "Barley, Oats", rabi: "Wheat, Mustard", summer: "Sugar Beet, Sunflower" },
+        regosol: { kharif: "Cotton, Millets", rabi: "Wheat, Gram", summer: "Groundnut, Sorghum" },
+        andosol: { kharif: "Tea, Coffee", rabi: "Potatoes, Wheat", summer: "Vegetables, Fruits" },
+        vertisol: { kharif: "Cotton, Rice", rabi: "Wheat, Pulses", summer: "Sorghum, Millet" },
+        aridisol: { kharif: "Millet, Sorghum", rabi: "Barley, Wheat", summer: "Guar, Sunflower" },
+        alfisol: { kharif: "Maize, Cotton", rabi: "Wheat, Lentils", summer: "Sunflower, Groundnut" },
+        ultisol: { kharif: "Rice, Maize", rabi: "Wheat, Mustard", summer: "Cotton, Soybean" },
+        inceptisol: { kharif: "Rice, Maize", rabi: "Wheat, Lentils", summer: "Sunflower, Vegetables" },
+        mollisol: { kharif: "Corn, Soybean", rabi: "Wheat, Oats", summer: "Alfalfa, Sunflower" },
+        spodosol: { kharif: "Barley, Rye", rabi: "Oats, Wheat", summer: "Potatoes, Blueberries" },
+        entisol: { kharif: "Millet, Cotton", rabi: "Wheat, Barley", summer: "Sunflower, Groundnut" },
+        histosol: { kharif: "Vegetables, Potatoes", rabi: "Carrots, Cabbage", summer: "Leafy Greens, Herbs" },
+        gelisol: { kharif: "Cold hardy vegetables", rabi: "Barley, Rye", summer: "Potatoes" },
+        oxisol: { kharif: "Cassava, Maize", rabi: "Beans, Peanuts", summer: "Coffee, Cocoa" },
+        gleysol: { kharif: "Rice, Jute", rabi: "Wheat, Lentils", summer: "Sugarcane" },
+        podzol: { kharif: "Barley, Rye", rabi: "Oats, Wheat", summer: "Potatoes, Blueberries" },
+        phaeozem: { kharif: "Wheat, Maize", rabi: "Barley, Oats", summer: "Sunflower, Vegetables" },
+        chernozem: { kharif: "Corn, Sunflower", rabi: "Wheat, Barley", summer: "Alfalfa, Sugar Beet" },
+        lixisol: { kharif: "Maize, Cotton", rabi: "Wheat, Peanut", summer: "Sunflower, Sorghum" },
+        nitisol: { kharif: "Coffee, Cocoa", rabi: "Banana, Plantain", summer: "Tea, Vegetables" },
+        arenosol: { kharif: "Groundnut, Millet", rabi: "Wheat, Barley", summer: "Sunflower, Sorghum" },
+        fluvisol: { kharif: "Rice, Sugarcane", rabi: "Wheat, Mustard", summer: "Maize, Vegetables" },
+        cambisol: { kharif: "Rice, Maize", rabi: "Wheat, Lentils", summer: "Sunflower, Vegetables" },
+        gleisol: { kharif: "Rice, Jute", rabi: "Wheat, Lentils", summer: "Sugarcane" },
+        solonetz: { kharif: "Millet, Cotton", rabi: "Wheat, Barley", summer: "Sunflower, Sorghum" },
+        vertisol_black: { kharif: "Cotton, Rice", rabi: "Wheat, Pulses", summer: "Sorghum, Millet" },
+        ranker: { kharif: "Millet, Maize", rabi: "Wheat, Barley", summer: "Potato, Sunflower" },
+        rendzina: { kharif: "Wheat, Barley", rabi: "Oats, Rye", summer: "Peas, Maize" },
+        terra_rossa: { kharif: "Olive, Grapes", rabi: "Figs, Wheat", summer: "Vegetables, Citrus" },
+        pedocal: { kharif: "Cotton, Wheat", rabi: "Barley, Mustard", summer: "Sunflower, Sorghum" },
+        pedalfer: { kharif: "Maize, Beans", rabi: "Wheat, Peanuts", summer: "Cotton, Sunflower" },
+        brown_forest_soil: { kharif: "Wheat, Rye", rabi: "Oats, Lentils", summer: "Potatoes, Vegetables" },
+        red_brown_earth: { kharif: "Millet, Beans", rabi: "Wheat, Barley", summer: "Sunflower, Maize" },
+        brown_earth: { kharif: "Wheat, Barley", rabi: "Oats, Peas", summer: "Carrots, Vegetables" },
+        mediterranean_soil: { kharif: "Olives, Grapes", rabi: "Wheat, Barley", summer: "Vegetables, Citrus" },
+        solifluction_soil: { kharif: "Cold hardy grains", rabi: "Barley, Rye", summer: "Potatoes, Root Veggies" },
+        allophane_soil: { kharif: "Vegetables, Rice", rabi: "Wheat, Lentils", summer: "Tea, Coffee" },
+        carpathian_soil: { kharif: "Maize, Potatoes", rabi: "Wheat, Barley", summer: "Vegetables, Sunflower" },
+        desert_oasis_soil: { kharif: "Dates, Millet", rabi: "Barley, Wheat", summer: "Sunflower, Sorghum" },
+        glacial_soil: { kharif: "Barley, Rye", rabi: "Oats, Wheat", summer: "Potatoes, Carrots" },
+        black_alfisol: { kharif: "Maize, Cotton", rabi: "Wheat, Peanuts", summer: "Sunflower, Soybean" },
+        basaltic_soil: { kharif: "Rice, Maize", rabi: "Wheat, Lentils", summer: "Coffee, Tea" },
+        quartz_dune_soil: { kharif: "Millet, Groundnut", rabi: "Barley, Gram", summer: "Sunflower" },
+        anthrosol: { kharif: "Vegetables, Rice", rabi: "Wheat, Lentils", summer: "Potatoes, Sunflower" },
+        tundra_soil: { kharif: "Cold tolerant grasses", rabi: "Barley, Rye", summer: "Root vegetables" },
+        permafrost_soil: { kharif: "Limited agriculture", rabi: "Barley, Rye", summer: "Cold tolerant crops" },
+        hydraquent_soil: { kharif: "Rice, Water Chestnut", rabi: "Wheat, Lentils", summer: "Sugarcane" },
+        gleyic_soil: { kharif: "Rice, Jute", rabi: "Wheat, Pulses", summer: "Sugarcane" },
+        umbric_soil: { kharif: "Coffee, Cocoa", rabi: "Banana, Plantain", summer: "Tea, Vegetables" },
+        umbric_podzols: { kharif: "Barley, Rye", rabi: "Oats, Wheat", summer: "Potatoes, Blueberries" }
+      };
+
+      const soilRec = recommendations[soil];
+      let crops = "No recommendation available";
+
+      if (soilRec) {
+        crops = soilRec[season] || crops;
+      }
+
+      resultDiv.textContent = "🌱 Recommended crops: " + crops;
+      resultDiv.focus();
+    }
+  </script>
+</body>
+</html>
